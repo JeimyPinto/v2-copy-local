@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos</title>
+    <link href="css/tailwind.min.css" rel="stylesheet" />
+    <link href="css/style_usuario.css" rel="stylesheet" />
+  </head>
+
+  <body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
+    <!-- Encabezado Principal -->
+    <header
+      class="bg-indigo-600 p-4 shadow-md flex items-center justify-between relative"
+    >
+      <div class="relative inline-block">
+        <button
+          id="openSidebar"
+          class="flex items-center justify-center p-2 text-white focus:outline-none"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <!-- Sidebar-->
+      <aside id="sidebar" class="bg-white w-72 h-full shadow-lg p-6"></aside>
+      <h1 class="text-white text-3xl font-bold">Productos</h1>
+    </header>
+    <!-- Botón flotante para abrir el formulario -->
+    <button
+      id="openModal"
+      class="fixed bottom-9 right-5 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none"
+      aria-label="Abrir formulario"
+    >
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M12 2C11.4477 2 11 2.44772 11 3V11H3C2.44772 11 2 11.4477 2 12C2 12.5523 2.44772 13 3 13H11V21C11 21.5523 11.4477 22 12 22C12.5523 22 13 21.5523 13 21V13H21C21.5523 13 22  12.5523 22 12C22 11.4477 21.5523 11 21 11H13V3C13 2.44772 12.5523 2 12 2Z"
+        />
+      </svg>
+    </button>
+    <!-- Modal con formulario para agregar -->
+    <aside
+      id="modal"
+      class="fixed inset-0 flex items-center justify-center hidden modal bg-opacity-50"
+    >
+      <div
+        class="flex flex-col items-center bg-gray-800 rounded-lg shadow-lg p-6 w-96 relative"
+      >
+        <h2 class="text-2xl font-semibold mb-6 text-white">Crear o Editar</h2>
+        <form id="dataForm" class="">
+          <input type="hidden" id="id" name="id" />
+          <div>
+            <label for="nombre" class="block text-lg font-medium">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Nombre"
+              required
+              class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
+            <label for="descripcion" class="block text-lg font-medium"
+              >Descripcion</label
+            >
+            <input
+              type="descripcion"
+              id="descripcion"
+              name="descripcion"
+              placeholder="descripcion"
+              required
+              class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
+            <label for="precio" class="block text-lg font-medium">Precio</label>
+            <input
+              type="precio"
+              id="precio"
+              name="precio"
+              placeholder="precio"
+              required
+              class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
+            <label for="stock" class="block text-lg font-medium">Stock</label>
+            <input
+              type="number"
+              id="stock"
+              name="stock"
+              placeholder="stock"
+              required
+              class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <button
+            type="submit"
+            class="block w-full py-2 bg-indigo-600 mt-5 text-white font-bold rounded-lg hover:bg-indigo-700 flex items-center justify-center"
+            aria-label="Guardar usuario"
+          >
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M19 21H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11l3 3v13a2 2 0 0 1-2 2zM14 2H8a2 2 0 0 0-2 2v2h10V4a2 2 0 0 0-2-2z"
+              />
+            </svg>
+            Guardar Producto
+          </button>
+        </form>
+        <button
+          id="closeModal"
+          class="mt-6 block w-full py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 flex items-center justify-center"
+          aria-label="Cerrar formulario"
+        >
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M18.36 6.64a9 9 0 1 0 0 10.72 9 9 0 0 0 0-10.72zm-1.42 9.42l-1.41 1.41L12 12.41l-4.93 4.93-1.41-1.41L10.59 12 5.66 7.07l1.41-1.41L13.41 12l4.93 4.93 1.41-1.41L14.41 12l4.93-4.93z"
+            />
+          </svg>
+          Cerrar
+        </button>
+      </div>
+    </aside>
+
+    <!-- Contenedor de tarjetas de productos -->
+    <main id="mainContent" class="container mx-auto my-10 px-4">
+      <div
+        id="dataList"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center items-center border-2 py-4"
+      ></div>
+    </main>
+
+    <!-- Modal de Éxito -->
+    <div
+      id="modalExito"
+      class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 id="mensajeExito" class="text-lg font-semibold"></h2>
+      </div>
+    </div>
+
+    <!-- Modal de Resultado de Edición -->
+    <div
+      id="modalEdicion"
+      class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 id="mensajeEdicion" class="text-lg font-semibold"></h2>
+      </div>
+    </div>
+
+    <!-- Modal de Confirmación eliminar -->
+    <div
+      id="modalEliminar"
+      class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-4">
+          ¿Estás seguro de que deseas eliminar este producto?
+        </h2>
+        <div class="flex justify-end">
+          <button
+            id="btnEliminar"
+            class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+            aria-label="Eliminar usuario"
+          >
+            Eliminar
+          </button>
+          <button
+            id="btnCancelar"
+            class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 ml-2"
+            aria-label="Cancelar eliminación"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="js/app_producto.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
