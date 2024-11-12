@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usuario</title>
+    <link href="css/tailwind.min.css" rel="stylesheet" />
+    <link href="css/style_usuario.css" rel="stylesheet" />
+  </head>
+
+  <body class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
+    <!-- Encabezado Principal -->
+    <header
+      class="bg-indigo-600 p-4 shadow-md flex items-center justify-between relative"
+    >
+      <div class="relative inline-block">
+        <button
+          id="openSidebar"
+          class="flex items-center justify-center p-2 text-white focus:outline-none"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <aside id="sidebar" class="bg-white w-72 h-full shadow-lg p-6">
+        <a
+          href="index.html"
+          class="block px-4 py-2 text-gray-800 hover:bg-indigo-600 hover:text-white"
+          >Inicio</a
+        >
+        <a
+          href="usuario.html"
+          class="block px-4 py-2 text-gray-800 hover:bg-indigo-600 hover:text-white"
+          >Usuarios</a
+        >
+        <button
+          id="closeSidebar"
+          class="mt-5 block w-full py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 flex items-center justify-center"
+          aria-label="Cerrar formulario"
+        >
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M18.36 6.64a9 9 0 1 0 0 10.72 9 9 0 0 0 0-10.72zm-1.42 9.42l-1.41 1.41L12 12.41l-4.93 4.93-1.41-1.41L10.59 12 5.66 7.07l1.41-1.41L13.41 12l4.93 4.93 1.41-1.41L14.41 12l4.93-4.93z"
+            />
+          </svg>
+          Cerrar
+        </button>
+      </aside>
+      <h1 class="text-white text-3xl font-bold">Inicio</h1>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main id="mainContent" class="flex-grow container mx-auto my-10 px-4">
+      <section class="bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Bienvenido</h2>
+        <p class="text-gray-600">
+          Esta es la página de inicio de la aplicación de gestión.
+        </p>
+      </section>
+    </main>
+
+    <!-- Pie de Página Fijo -->
+    <footer
+      class="bg-indigo-600 text-white text-left p-4 fixed bottom-0 w-full"
+    >
+      <p>&copy; 2024 Sistema de Gestión. Jose Germán Estrada Clavijo.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/app_usuario.js"></script>
+  </body>
+</html>

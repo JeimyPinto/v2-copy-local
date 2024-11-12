@@ -1,0 +1,7 @@
+<?php
+// Permitir solicitudes desde cualquier origen
+header('Access-Control-Allow-Origin: *');  // Permite todos los orÃ­genes
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');  // Permite los mÃ©todos que estÃ¡s utilizando
+header('Access-Control-Allow-Headers: Content-Type, Authorization');  // Permite los encabezados
+header('Content-Type: application/json');
+?>
