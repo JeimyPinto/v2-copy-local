@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <p class="text-sm">Usuario: ${factura.usuario_nombre}</p>
               <p class="text-sm">Total: ${factura.total}</p>
             <div class="mt-4 flex justify-between">
-              <button class="btn-edit p-3 bg-indigo-800 rounded-lg text-white" onclick="editFactura(${factura.id_factura})">Editar</button>
+              <button class="btn-edit p-3 bg-indigo-800 rounded-lg text-white" onclick="verDetalleFactura(${factura.id_factura})">Ver Detalle</button>
               <button class="btn-delete p-3 bg-red-800 rounded-lg text-white" onclick="confirmDelete(${factura.id_factura})">Eliminar</button>
             </div>
           </div>
@@ -152,22 +152,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /**
-      * Función para editar factura
+      * Función para ver en detalle lo comprado en la factura
       * @param {number} id 
       */
-    window.editFactura = async function (id) {
+    window.verDetalleFactura = async function (id) {
         const factura = await fetchFactura(id);
 
-        if (factura && factura.id_usuario && factura.id_cliente) {
-            document.getElementById("select_clientes").value = factura.id_cliente;
-            document.getElementById("select_usuarios").value = factura.id_usuario;
-            currentId = id;
-
-            // Mostrar el modal
-            document.getElementById("modal").classList.remove("hidden");
-        } else {
-            showModalExito("Error al cargar los datos de la factura. Intenta nuevamente.");
-        }
     };
 
     /**
@@ -191,28 +181,39 @@ document.addEventListener("DOMContentLoaded", function () {
         modalEliminar.classList.remove("hidden");
     };
 
-    /**
-     * Función para eliminar una factura
-     */
-    btnEliminar.addEventListener("click", function () {
-        const factura = fetchFactura(currentId);
+    // Eliminar usuario
+    btnEliminar.addEventListener("click", async function () {
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `action=delete&id=${currentId}`,
+            });
 
-        if (factura) {
-            const formData = new FormData();
-            formData.append("action", "delete");
-            formData.append("id", currentId);
-            saveFacturas(formData);
+            if (!response.ok) {
+                throw new Error("Error en la respuesta de la red");
+            }
+
+            const data = await response.json();
+            if (data.success) {
+                showModalExito(data.message);
+                fetchUsers();
+                currentId = null;
+            } else {
+                showModalExito(data.message);
+            }
             modalEliminar.classList.add("hidden");
-            showModalExito("Factura eliminada correctamente.");
-        } else {
-            showModalExito("Error al eliminar la factura. Intenta nuevamente.");
+        } catch (error) {
+            console.error("Error al eliminar usuario:", error);
         }
     });
+    
     // Manejo del modal
     openModal.addEventListener("click", () => {
         fetchUsuarios();
         modal.classList.remove("hidden");
     });
+
     // Cerrar modal de eliminación
     document.getElementById("btnCancelar").addEventListener("click", function () {
         modalEliminar.classList.add("hidden");
