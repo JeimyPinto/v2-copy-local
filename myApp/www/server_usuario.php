@@ -26,6 +26,15 @@ try {
             echo json_encode($usuarios);
             break;
 
+        case 'login':
+            $email = $_POST['email'];
+            $contrasenia = $_POST['contrasenia'];
+            $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ? && password = ?");
+            $stmt->execute([$email, $contrasenia]);
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo json_encode($usuario);
+            break;
+
         case 'fetch':
             $id = $_POST['id'];
             $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE id = ?");

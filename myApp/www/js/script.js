@@ -51,4 +51,49 @@ document.addEventListener("DOMContentLoaded", function () {
       modal.classList.add("hidden");
     }
   });
+
+  //Manejo inicio de sesión
+  const loginForm = document.getElementById("loginForm");
+  const url = "server_usuario.php";
+
+  // Evento para el formulario de inicio de sesión
+  loginForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const formData = new FormData(loginForm);
+    formData.append("action", "login");
+    console.log(formData)
+    loginUser(formData);
+  });
+
+  // Función para iniciar sesión
+  async function loginUser(formData) {
+    
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: new URLSearchParams(formData),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+         showModalExito(data.message);
+         // Redirigir a la página principal o dashboard
+         window.location.href = "index.html";
+       } else {
+         showModalExito(data.message);
+       }
+    } catch (error) {
+       console.error("Error en el inicio de sesión:", error);
+       showModalExito("Ocurrió un error al intentar iniciar sesión.");
+    }
+  }
+  // Función para mostrar el modal de éxito (oculta el modal después de 2 segundos)
+  function showModalExito(message) {
+    const mensajeExito = document.getElementById("mensajeExito");
+    const modalExito = document.getElementById("modalExito");
+    mensajeExito.textContent = message;
+    modalExito.classList.remove("hidden");
+    setTimeout(() => modalExito.classList.add("hidden"), 2000);
+  }
+
 });
