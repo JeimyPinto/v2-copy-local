@@ -51,10 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
       modal.classList.add("hidden");
     }
   });
-
+  
   //Manejo inicio de sesión
   const loginForm = document.getElementById("loginForm");
   const url = "server_usuario.php";
+
 
   // Evento para el formulario de inicio de sesión
   loginForm.addEventListener("submit", function (event) {
