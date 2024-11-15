@@ -21,18 +21,23 @@ try {
 
     switch ($action) {
         case 'fetchAll':
-            $stmt = $pdo->query("SELECT id, nombre, email, telefono FROM usuarios");
+            $stmt = $pdo->query("SELECT * FROM usuarios");
             $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($usuarios);
             break;
 
         case 'login':
             $email = $_POST['email'];
-            $contrasenia = $_POST['contrasenia'];
-            $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ? && password = ?");
-            $stmt->execute([$email, $contrasenia]);
+            $password = $_POST['password'];
+            $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
+            $stmt->execute([$email]);
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo json_encode($usuario);
+
+            if ($usuario && password_verify($password, $usuario['password'])) {
+                echo json_encode([$usuario]);
+            } else {
+                echo json_encode(['error' => 'Invalid email or password']);
+            }
             break;
 
         case 'fetch':

@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const dataList = document.getElementById("dataList");
   const btnEliminar = document.getElementById("btnEliminar");
   const mensajeExito = document.getElementById("mensajeExito");
-  const modalEliminar = document.getElementById("modalEliminar");
   const modalExito = document.getElementById("modalExito");
+  const modalEliminar = document.getElementById("modalEliminar");
   const url = "server_cliente.php";
   let currentId = null;
 
@@ -87,7 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const action = currentId ? "update" : "add";
       formData.append("action", action);
       if (currentId) formData.append("id", currentId);
-
       saveClientes(formData);
   });
 

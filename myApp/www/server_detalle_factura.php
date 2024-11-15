@@ -15,7 +15,7 @@ try {
 
     switch ($action) {
         case 'fetchAll':
-            $stmt = $pdo->query("SELECT * FROM detalle_factura JOIN productos ON detalle_factura.id_producto = producto.id_producto JOIN facturas ON detalle_factura.id_factura = factura.id_factura");
+            $stmt = $pdo->query("SELECT * FROM detalle_factura JOIN productos ON detalle_factura.id_producto = productos.id_producto JOIN facturas ON detalle_factura.id_factura = facturas.id_factura ORDER BY detalle_factura.id_detalle ASC");
             $detalles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($detalles);
             break;
